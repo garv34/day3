@@ -1,0 +1,18 @@
+package com.example.day3.service;
+
+import com.example.day3.model.StudentModel;
+import com.example.day3.repository.StudentRepository;
+import org.springframework.stereotype.Service;
+
+@Service
+public class StudentService {
+    private  StudentRepository repository;
+
+    public StudentService(StudentRepository repository) {
+        this.repository = repository;
+    }
+    //create
+    public StudentModel addStudent(StudentModel student){
+        return repository.save(student);
+    }
+}
