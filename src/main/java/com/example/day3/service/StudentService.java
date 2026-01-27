@@ -3,6 +3,7 @@ package com.example.day3.service;
 import com.example.day3.model.StudentModel;
 import com.example.day3.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -15,4 +16,29 @@ public class StudentService {
     public StudentModel addStudent(StudentModel student){
         return repository.save(student);
     }
+
+    // display
+    public List<StudentModel> getStudents(){
+        return repository.findAll();
+    }
+
+    // update
+
+    public StudentModel updateStudent(String id,StudentModel student){
+        StudentModel existingStudent=repository.findById(id)
+                .orElseThrow(() ->new RuntimeException("No Student found"));
+        existingStudent.setName(student.getName());
+        existingStudent.setEmail(student.getEmail());
+        existingStudent.setAge(student.getAge());
+        return repository.save(existingStudent);
+    }
+    // Delete
+    public StudentModel deleteStudent(String id){
+        StudentModel student = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+
+        repository.deleteById(id);
+        return student;
+    }
+
 }
